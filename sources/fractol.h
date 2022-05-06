@@ -6,7 +6,7 @@
 /*   By: sbars <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 15:57:29 by sbars             #+#    #+#             */
-/*   Updated: 2022/03/08 12:41:44 by sbars            ###   ########.fr       */
+/*   Updated: 2022/04/26 16:31:17 by sbars            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 #define WW 1152
 #define WH 648
-#define ITERATION_MAX 35
+#define ITERATION_MAX 70
 
 // TEMPORARY          <------ REMOVE THIS | REMOVE THIS | REMOVE THIS
 #include <stdio.h>

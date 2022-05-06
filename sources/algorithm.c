@@ -6,7 +6,7 @@
 /*   By: sbars <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 12:06:44 by sbars             #+#    #+#             */
-/*   Updated: 2022/03/17 12:06:58 by sbars            ###   ########.fr       */
+/*   Updated: 2022/05/06 18:02:19 by sbars            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,16 @@ int	plot_mandelbrot(t_vars *vars)
 	double	i;
 	t_data	img;
 
-	x = 0;
-	y = 0;
+	x = -1;
+	y = -1;
 
 	img_init(vars, &img, WW, WH);
-	while (x < WW)
+	while (++x < WW)
 	{
-		while (y < WH)
+		y = -1;
+		while (++y < WH)
 		{
+
 			c.r = 1.5 * (x - WW / 2) / (0.5 * vars->zoom * WW) + vars->moveX;
 			c.i = (y - WH / 2) / (0.5 * vars->zoom * WH) + vars->moveY;
 			z.r = 0;
@@ -61,8 +63,6 @@ int	plot_mandelbrot(t_vars *vars)
 				my_mlx_pixel_put(&img, x, y, 0x00FFFFFF);
 			y++;
 		}
-		y = 0;
-		x++;
 	}
 	mlx_put_image_to_window(vars->mlx, vars->win, img.img, 0, 0);
 	return (0);

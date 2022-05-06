@@ -6,7 +6,7 @@
 /*   By: sbars <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 12:07:06 by sbars             #+#    #+#             */
-/*   Updated: 2022/03/17 12:07:12 by sbars            ###   ########.fr       */
+/*   Updated: 2022/05/06 17:53:28 by sbars            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void	vars_init(t_vars *vars)
 	vars->x = 0;
 	vars->y = 0;
 	vars->image = NULL;
+	vars->fractal = NULL;
 	mlx_key_hook(vars->win, key_hook, (void *) vars);
 	mlx_mouse_hook(vars->win, mouse_hook, (void *) vars);
 }
