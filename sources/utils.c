@@ -6,38 +6,36 @@
 /*   By: sbars <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 12:07:06 by sbars             #+#    #+#             */
-/*   Updated: 2022/05/06 17:53:28 by sbars            ###   ########.fr       */
+/*   Updated: 2022/05/09 18:36:36 by sbars            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-int	key_hook(int keycode, t_vars *vars)
+int	key_hook(int keycode, t_meta *meta)
 {
 	if (keycode == 53)
 	{
-		mlx_destroy_window(vars->mlx, vars->win);
+		mlx_destroy_window(meta->mlx, meta->win);
 		exit(0);
 	}
 	return (0);
 }
 
-int	mouse_hook(int code, int x, int y, t_vars *vars)
+int	mouse_hook(int	code, int	x, int	y, t_meta *meta)
 {
 	double	zm;
 
-	zm = vars->zoom;
-	vars->x = x;
-	vars->y = y;
+	zm = meta->comp->zoom;
+	(void) x;
+	(void) y;
 	if (code == 5)
 	{
-		vars->zoom += 0.2;
-		plot_mandelbrot(vars);
+		meta->comp->zoom += 0.2;
 	}
 	else if (code == 4 && zm > 5.0)
 	{
-		vars->zoom -= 0.1;
-		plot_mandelbrot(vars);
+		meta->comp->zoom -= 0.2;
 	}
 	return (0);
 }
@@ -50,25 +48,37 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
-void	img_init(t_vars *vars, t_data *img, int	w, int h)
+t_meta	*malloc_sts() {
+	t_meta	*tmp;
+
+	if ((tmp = (t_meta *)malloc(sizeof(t_meta))) == NULL)
+		return NULL;
+	tmp->comp = (t_comp *)malloc(sizeof(t_comp));
+	//tmp->colors = (t_colors *)malloc(sizeof(t_colors));
+	return (tmp);
+}
+
+void	img_init(t_meta	*meta, t_data *img, int	w, int h)
 {
-	img->img = mlx_new_image(vars->mlx, w, h);
+	img->img = mlx_new_image(meta->mlx, w, h);
 	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel, &img->line_length, &img->endian);
 }
 
-void	vars_init(t_vars *vars)
+t_meta	*meta_init(int	type)
 {
-	vars->mlx = mlx_init();
-	vars->win = mlx_new_window(vars->mlx, WW, WH, "Fract-ol");
-	vars->zoom = 1.0;
-	vars->moveX = -0.5;
-	vars->moveY = 0;
-	vars->x = 0;
-	vars->y = 0;
-	vars->image = NULL;
-	vars->fractal = NULL;
-	mlx_key_hook(vars->win, key_hook, (void *) vars);
-	mlx_mouse_hook(vars->win, mouse_hook, (void *) vars);
+	t_meta	*meta;
+
+	meta	= malloc_sts();	
+	if (!meta)
+		return (NULL);
+	meta->mlx = mlx_init();
+	meta->win = mlx_new_window(meta->mlx, WW, WH, "Fract-ol");
+	meta->image = NULL;
+	meta->comp->zoom = 1.0;
+	meta->type = type;
+	mlx_key_hook(meta->win, key_hook, (void *) meta);
+	mlx_mouse_hook(meta->win, mouse_hook, (void *) meta);
+	return (meta);
 }
 
 /*void	colors_selection()

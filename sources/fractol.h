@@ -6,16 +6,16 @@
 /*   By: sbars <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 15:57:29 by sbars             #+#    #+#             */
-/*   Updated: 2022/04/26 16:31:17 by sbars            ###   ########.fr       */
+/*   Updated: 2022/05/09 19:13:43 by sbars            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FRACTOL_H
 # define FRACTOL_H
 
-#define WW 1152
-#define WH 648
-#define ITERATION_MAX 70
+#define WW 720
+#define WH 720
+#define ITERATION_MAX 80
 
 // TEMPORARY          <------ REMOVE THIS | REMOVE THIS | REMOVE THIS
 #include <stdio.h>
@@ -40,23 +40,34 @@ typedef struct	s_data {
 	int		endian;
 }	t_data;
 
-typedef struct s_vars {
-	void *mlx;
-	void *win;
+typedef	struct s_comp {
 	double	zoom;
+	double	remin;
+	double	remax;
+	double	imin;
+	double	imax;
 	double	moveX;
 	double	moveY;
-	int		x;
-	int		y;
+	double	zre;
+	double	zim;
+}	t_comp;
+
+typedef struct s_meta {
+	void *mlx;
+	void *win;
 	struct s_data *image;
-}	t_vars;
+	struct s_comp *comp;
+	int	type;
+}	t_meta;
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
-int		key_hook(int keycode, t_vars *vars);
-int		mouse_hook(int code, int x, int y, t_vars *vars);
-int		plot_mandelbrot(t_vars *vars);
-int		algo_selection(t_vars *vars, char	*param);
-void	img_init(t_vars *vars, t_data *img, int	w, int h);
-void	vars_init(t_vars *vars);
+int		key_hook(int keycode, t_meta *meta);
+int		mouse_hook(int code, int x, int y, t_meta	*meta);
+int		plot(t_meta	*meta);
+int		algo_selection(t_meta	*meta, char	*param);
+void	img_init(t_meta	*meta, t_data *img, int	w, int h);
+t_meta	*meta_init(int	type);
+int		mandelbrot(int x, int y, t_meta	*meta);
+void		set_complex_plane(t_meta	*meta);
 
 #endif
