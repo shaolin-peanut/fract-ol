@@ -6,7 +6,7 @@
 /*   By: sbars <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 12:06:44 by sbars             #+#    #+#             */
-/*   Updated: 2022/05/09 19:13:40 by sbars            ###   ########.fr       */
+/*   Updated: 2022/05/10 12:51:45 by sbars            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,36 +23,52 @@
 	return (0);
 }*/
 
-void	set_complex_plane(t_meta	*meta)
+int	set_complex_plane(t_meta	*meta)
 {
 	if (meta->type == 0)
 	{
-		meta->comp->remin = -2;
-		meta->comp->remax = 2;
-		meta->comp->imin = -2;
-		meta->comp->imax = 2;
-		meta->comp->zre = meta->comp->remin + meta->comp->remax; // create range, not final z_re
-		meta->comp->zim = meta->comp->imin + meta->comp->imax;
+		meta->comp->remin = -2.0;
+		meta->comp->remax = 2.0;
+		meta->comp->imin = -2.0;
+		meta->comp->imax = 2.0;
+		meta->comp->z.r = meta->comp->remax - meta->comp->remin;
+		printf("zre: %lf\n", meta->comp->z.r);
+		meta->comp->z.i = meta->comp->imax - meta->comp->imin;
 	}
 	else
 		exit(EXIT_FAILURE);
+	return (1);
+}
+
+t_cn	init_complex()
+{
+	t_cn	*complex;
+
+	complex = (t_cn *)malloc(sizeof(t_cn));
+	if (!complex)
+		exit(EXIT_FAILURE);
+	complex->r = 0.0;
+	complex->i = 0.0;
+	return (*complex);
 }
 
 int	plot(t_meta	*meta)
 {
-	int	x;
-	int	y;
+	double	x;
+	double	y;
 
-	x = -1;
-	y = -1;
+	x = -1.0;
+	y = -1.0;
 
 	while (++x < WW)
 	{
-		y = -1;
+		y = -1.0;
 		while (++y < WH)
 		{
-			meta->comp->zre *= x / WW;
-			meta->comp->zim *= y / WH;
+			meta->comp->z.r *= x / WW; // divide x by width and multiply by range
+			meta->comp->z.i *= y / WH; // divide y by width and multiply by range
+			printf("z.r: %lf\n", meta->comp->z.r);
+			printf("z.i: %lf\n", meta->comp->z.i);
 			if (meta->type == 0)
 				mandelbrot(x, y, meta);
 		}
@@ -86,18 +102,15 @@ int	mandelbrot(int	x, int	y, t_meta	*meta)
 	t_data	img;
 
 	img_init(meta, &img, WW, WH);
-	i		= 0;
-	current.r	= meta->comp->zre;
-	current.i	= meta->comp->zim;
-	while (i < ITERATION_MAX)
+	i		= -1;
+	current.r	= meta->comp->z.r;
+	current.i	= meta->comp->z.r;
+	while (++i < ITERATION_MAX && c_abs(current) < 4.0)
 	{
 		old.r = current.r;
 		old.i = current.i;
-		current.r = pow(old.r, 2) - pow(old.i, 2) + meta->comp->zre;
-		current.i = 2 * (old.r * old.i) + meta->comp->zim;
-		if (/*(pow(current.r, 2) * pow(current.i, 2) < 4 || */c_abs(current) > 4.0)
-			break;
-		i++;
+		current.r = pow(old.r, 2) - pow(old.i, 2) + meta->comp->z.r;
+		current.i = 2 * (old.r * old.i) + meta->comp->z.i;
 	}
 	if (i == ITERATION_MAX)
 		my_mlx_pixel_put(&img, x, y, 0x00000000);

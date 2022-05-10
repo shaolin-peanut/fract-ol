@@ -6,16 +6,16 @@
 /*   By: sbars <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 15:57:29 by sbars             #+#    #+#             */
-/*   Updated: 2022/05/09 19:13:43 by sbars            ###   ########.fr       */
+/*   Updated: 2022/05/10 12:49:51 by sbars            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FRACTOL_H
 # define FRACTOL_H
 
-#define WW 720
-#define WH 720
-#define ITERATION_MAX 80
+#define WW 1080.0
+#define WH 1080.0
+#define ITERATION_MAX 100
 
 // TEMPORARY          <------ REMOVE THIS | REMOVE THIS | REMOVE THIS
 #include <stdio.h>
@@ -48,8 +48,7 @@ typedef	struct s_comp {
 	double	imax;
 	double	moveX;
 	double	moveY;
-	double	zre;
-	double	zim;
+	t_cn	z;
 }	t_comp;
 
 typedef struct s_meta {
@@ -68,6 +67,7 @@ int		algo_selection(t_meta	*meta, char	*param);
 void	img_init(t_meta	*meta, t_data *img, int	w, int h);
 t_meta	*meta_init(int	type);
 int		mandelbrot(int x, int y, t_meta	*meta);
-void		set_complex_plane(t_meta	*meta);
+int		set_complex_plane(t_meta	*meta);
+t_cn	init_complex();
 
 #endif

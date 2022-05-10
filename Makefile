@@ -1,7 +1,7 @@
 ## SRCS	= 	${addprefix sources/, so_long.c map_checks.c map_generator.c player_movements.c player_animations.c enemy_movement.c}	\
 			${addprefix get_next_line/, get_next_line.c	get_next_line_utils.c}
 NAME = fractol
-SRC = ${addprefix sources/, main.c algorithm.c utils.c}
+SRC = ${addprefix sources/, main.c fractals.c utils.c hook_utils.c}
 
 FLGS = -Wall -Werror -Wextra -fsanitize=address -g3
 OBJ = $(SRC:.c=.o)
