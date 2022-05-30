@@ -20,7 +20,7 @@ int	main(int argc, char **argv)
 	ret = 0;
 	if (argc != 2)
 	{
-		write(1, "Specify option:\n- mandelbrot\n- julia\n", 38);
+		write(1, "Options:\n- mandelbrot\n- julia\n", 31);
 		return (0);
 	}
 	if (!ft_strncmp(argv[1], "mandelbrot", 11))
@@ -37,7 +37,9 @@ int	main(int argc, char **argv)
 	}
 	else
 		exit(EXIT_FAILURE);
-	if ((ret = set_complex_plane(meta) == 1))
+	if ((ret = set_complex_plane(meta, 2.0, -2.0) == 1))
+    {
 		plot(meta);
-	mlx_loop(meta->mlx);
+	    mlx_loop(meta->mlx);
+    }
 }

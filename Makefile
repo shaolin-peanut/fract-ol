@@ -1,40 +1,65 @@
-## SRCS	= 	${addprefix sources/, so_long.c map_checks.c map_generator.c player_movements.c player_animations.c enemy_movement.c}	\
-			${addprefix get_next_line/, get_next_line.c	get_next_line_utils.c}
-NAME = fractol
-SRC = ${addprefix sources/, main.c fractals.c utils.c hook_utils.c}
+#Compilation setting
 
-FLGS = -Wall -Werror -Wextra -fsanitize=address -g3
-OBJ = $(SRC:.c=.o)
-HEAD = sources/fractol.h
-CC = gcc
-MLX_PATH	= 	./libraries/mlx/
-LBFT_PATH	= 	./libraries/libft/
-FRAMLIBS	= 	-L ${LBFT_PATH} -lft -L ${MLX_PATH} -lmlx -framework OpenGL -framework AppKit
+NAME=fract-ol
+CC=gcc
+CFLAGS=-Wall -Wextra -Werror -fsanitize=address
 
-all:		libft mlx ${NAME}
+#Sources
+DIR_SRC=./sources
+SRCS=	${DIR_SRC}/main.c\
+		${DIR_SRC}/fractals.c\
+		${DIR_SRC}/utils.c\
+		${DIR_SRC}/hook_utils.c\
 
-.c.o:		
-			${CC} ${FLGS} -Imlx -c $< -o ${<:.c=.o}
+DIR_OBJ=./objs
+OBJS=${addprefix ${DIR_OBJ}/, ${notdir ${SRCS:.c=.o}}}
 
-$(NAME):	${OBJ} ${HEAD}
-			${CC} ${FLGS} -I ${MLX_PATH} -I ${LBFT_PATH} ${OBJ} ${FRAMLIBS} -o ${NAME}
+#Find the os
+UNAME_S := $(shell uname -s)
 
-libft:
-			@make -C ${LBFT_PATH}
+#Linux
+#$(CC)
+#$(OBJS) -L${DIR_LIB_MLX}/ -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -o $(NAME)
+ifeq ($(UNAME_S),Linux)
+		DIR_LIB_MLX= ./mlx-linux
+		DIR_LIB_SYS= ./usr/lib
+		OFLAGS=-L${DIR_LIB_MLX} -lmlx  -I${DIR_LIB_MLX} -lXext -lX11 -lm -lz
+endif
+#L/usr/lib
 
-mlx:
-			@make -C ${MLX_PATH}
+#Apple
+#$(CC) $(OBJS)		 -L${DIR_LIB_MLX}/ -Imlx -lmlx -o $(NAME)
+#$(CC) $(OBJS) -L${DIR_LIB_M	LX}/ -Imlx-apple -lmlx -o $(NAME)
 
-fclean:	clean
-	rm -f $(NAME)
-##	@make -C $(LBFT_PATH) clean
-##	@make -C $(MLX_PATH) fclean
+ifeq ($(UNAME_S),Darwin)
+		DIR_LIB_MLX=libs/mlx-apple
+		OFLAGS=-L${DIR_LIB_MLX} -lmlx -framework OpenGL -framework AppKit
+endif
+
+vpath %.c ${DIR_SRC}
+RM=rm -f
+
+all : ${NAME}
+
+$(NAME):			 $(OBJS)
+		#make -C ${DIR_LIB_MLX}
+		$(CC) -fsanitize=address $(OBJS) -L${DIR_LIB_MLX} ${OFLAGS} -o $(NAME)
+
+${DIR_OBJ}/%.o : %.c | ${DIR_OBJ}
+		$(CC) ${CFLAGS} -I${DIR_LIB_MLX} -O3 -c $< -o $@
+
+${DIR_OBJ} :
+		@mkdir -p ${DIR_OBJ}
 
 clean:
-	rm -f $(OBJ)
-	@make -C $(LBFT_PATH) clean
-	@make -C $(MLX_PATH) clean
+		#make clean -C ${DIR_LIB_MLX}
+		${RM} ${OBJS}
 
-re:	fclean all
+fclean: clean
+		${RM} ${NAME}
 
-.PHONY:	all fclean clean re
+re: fclean all
+		#make re -C ${DIR_LIB_MLX}
+
+norm:
+		norminette ${SRCS} 

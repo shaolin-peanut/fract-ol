@@ -13,16 +13,19 @@
 #ifndef FRACTOL_H
 # define FRACTOL_H
 
-#define WW 1080.0
-#define WH 1080.0
-#define ITERATION_MAX 100
+#define WW 1000.0
+#define WH 1000.0
+# define RED 15
+# define GREEN 10
+# define BLUE 5
+#define ITERATION_MAX 500
 
 // TEMPORARY          <------ REMOVE THIS | REMOVE THIS | REMOVE THIS
 #include <stdio.h>
 #include <stdlib.h>
 // ALLOWED
-#include "../libraries/mlx/mlx.h"
-#include "../libraries/libft/libft.h"
+#include "../mlx-linux/mlx.h"
+#include "../libs/libft/libft.h"
 #include <unistd.h>
 #include <math.h>
 
@@ -41,14 +44,18 @@ typedef struct	s_data {
 }	t_data;
 
 typedef	struct s_comp {
-	double	zoom;
+	double	zoom_w;
+    double  zoom_h;
 	double	remin;
 	double	remax;
+    double  rerange;
+    double  recenter;
 	double	imin;
 	double	imax;
-	double	moveX;
-	double	moveY;
-	t_cn	z;
+    double  imrange;
+    double  imcenter;
+	double	cre;
+	double	cim;
 }	t_comp;
 
 typedef struct s_meta {
@@ -56,6 +63,7 @@ typedef struct s_meta {
 	void *win;
 	struct s_data *image;
 	struct s_comp *comp;
+    t_data img;
 	int	type;
 }	t_meta;
 
@@ -64,10 +72,10 @@ int		key_hook(int keycode, t_meta *meta);
 int		mouse_hook(int code, int x, int y, t_meta	*meta);
 int		plot(t_meta	*meta);
 int		algo_selection(t_meta	*meta, char	*param);
-void	img_init(t_meta	*meta, t_data *img, int	w, int h);
+t_data	img_init(void   *mlx, int	w, int h);
 t_meta	*meta_init(int	type);
-int		mandelbrot(int x, int y, t_meta	*meta);
-int		set_complex_plane(t_meta	*meta);
+int		mandelbrot(int x, int y, t_meta	*meta, t_cn z_t, t_cn z_t1);
+int		set_complex_plane(t_meta	*meta, double   max, double min);
 t_cn	init_complex();
 
 #endif

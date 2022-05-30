@@ -26,16 +26,16 @@ int	mouse_hook(int	code, int	x, int	y, t_meta *meta)
 {
 	double	zm;
 
-	zm = meta->comp->zoom;
+	zm = meta->comp->zoom_w;
 	(void) x;
 	(void) y;
 	if (code == 5)
 	{
-		meta->comp->zoom += 0.2;
+		meta->comp->zoom_w += 0.2;
 	}
 	else if (code == 4 && zm > 5.0)
 	{
-		meta->comp->zoom -= 0.2;
+		meta->comp->zoom_w -= 0.2;
 	}
 	return (0);
 }
