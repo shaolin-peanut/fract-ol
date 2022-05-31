@@ -10,6 +10,7 @@ SRCS=	${DIR_SRC}/main.c\
 		${DIR_SRC}/fractals.c\
 		${DIR_SRC}/utils.c\
 		${DIR_SRC}/hook_utils.c\
+		${DIR_SRC}/zoom.c\
 
 DIR_OBJ=./objs
 OBJS=${addprefix ${DIR_OBJ}/, ${notdir ${SRCS:.c=.o}}}

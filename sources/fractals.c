@@ -12,6 +12,8 @@
 
 #include "fractol.h"
 
+int	calculate(int	x, int	y, t_meta	*meta, t_cn z_t, t_cn z_t1);
+
 int	set_complex_plane(t_meta *meta, double max, double min)
 {
 	meta->comp->remin = min; //-2.1;
@@ -37,44 +39,67 @@ t_cn	init_complex()
 	return (*complex);
 }
 
+t_cn    prep_vars(int x, int y, t_meta *meta)
+{
+    t_cn    zt;
+    t_cn    tmp;
+    t_comp   *cp;
+
+    cp = meta->comp;
+    zt = init_complex();
+    tmp = init_complex();
+    tmp.r = x / cp->zoom_w + cp->remin;
+    tmp.i = y / cp->zoom_h + cp->imin;
+    if (meta->type == 0)//MANDELBROT
+    {
+        cp->cre = tmp.r;
+        cp->cim = tmp.i;
+    }
+    else if (meta->type == 1)
+    {
+        zt.r = tmp.r;
+        zt.i = tmp.i;
+        cp->cre = -0.8;
+        cp->cim = 0.156;
+    }
+    return (zt);
+}
+
 int	plot(t_meta	*meta)
 {
 	double	x;
 	double	y;
-    t_cn    z_t;
-	t_cn    z_t1;
+	t_cn    zt1;
+    t_cn    zt;
     t_comp  *cp;
 	//t_cn	tmp;
 
 	x = -1.0;
     y = -1.0;
+    zt1 = init_complex();
     cp = meta->comp;
     cp->zoom_w = WW / cp->rerange;
     cp->zoom_h = WH / cp->imrange;
-    z_t = init_complex();
-    z_t1 = init_complex();
-    z_t.r = meta->comp->cre;
-    z_t.i = meta->comp->cre;
-    z_t1.r = z_t.r;
-    z_t1.i = z_t.i;
+    //z_t.r = meta->comp->cre;
+    //z_t.i = meta->comp->cre;
+    //z_t1.r = z_t.r;
+    //z_t1.i = z_t.i;
 
-	// TEST PLOTTING SOMETHING, ANYTHING, FROM HERE, TO CHECK IF MLX WORKS
 	while (++x < WW)
 	{
 		y = -1.0;
 		while (++y < WH)
 		{
-			meta->comp->cre = x / cp->zoom_w + cp->remin;
-			meta->comp->cim = y / cp->zoom_h + cp->imin;
-			if (meta->type == 0)
-				mandelbrot(x, y, meta, z_t, z_t1);
+            zt = prep_vars(x, y, meta);
+            calculate(x, y, meta, zt, zt1);
 		}
 	}
 	mlx_put_image_to_window(meta->mlx, meta->win, meta->img.img, 0, 0);
 	return (1);	
 }
 
-int	mandelbrot(int	x, int	y, t_meta	*meta, t_cn z_t, t_cn z_t1)
+
+int	calculate(int	x, int	y, t_meta	*meta, t_cn z_t, t_cn z_t1)
 {
 	int		i;
 
@@ -87,15 +112,9 @@ int	mandelbrot(int	x, int	y, t_meta	*meta, t_cn z_t, t_cn z_t1)
 		i++;
 	}
 	if (i == ITERATION_MAX)
-    {
-        //printf("I am in the set!\n");
 		my_mlx_pixel_put(&meta->img, x, y, 0);
-    }
 	else
-    {
         my_mlx_pixel_put(&meta->img, x, y, (((i << RED) + (i << GREEN) + (i << BLUE)) & 0xFFFFFF));
-    }
 	return (0);
 }
-
 // https://lodev.org/cgtutor/juliamandelbrot.html#Mandelbrot_Set_

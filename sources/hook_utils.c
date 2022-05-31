@@ -14,28 +14,26 @@
 
 int	key_hook(int keycode, t_meta *meta)
 {
-	if (keycode == 53)
+	if (keycode == 53 || keycode == 65307)
 	{
+        mlx_destroy_image(meta->mlx, meta->img.img);
 		mlx_destroy_window(meta->mlx, meta->win);
-		exit(0);
+        exit(0);
 	}
 	return (0);
 }
 
 int	mouse_hook(int	code, int	x, int	y, t_meta *meta)
 {
-	double	zm;
-
-	zm = meta->comp->zoom_w;
-	(void) x;
-	(void) y;
-	if (code == 5)
+	if (code == 4)
 	{
-		meta->comp->zoom_w += 0.2;
+        zoom(meta, x, y, 1);
+        plot(meta);
 	}
-	else if (code == 4 && zm > 5.0)
+	else if (code == 5)
 	{
-		meta->comp->zoom_w -= 0.2;
+        zoom(meta, x, y, -1);
+        plot(meta);
 	}
 	return (0);
 }

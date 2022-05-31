@@ -13,13 +13,12 @@
 #ifndef FRACTOL_H
 # define FRACTOL_H
 
-#define WW 1000.0
-#define WH 1000.0
-# define RED 15
-# define GREEN 10
-# define BLUE 5
-#define ITERATION_MAX 500
-
+#define WW 800.0
+#define WH 800.0
+# define RED 12
+# define GREEN 8
+# define BLUE 6
+#define ITERATION_MAX 80
 // TEMPORARY          <------ REMOVE THIS | REMOVE THIS | REMOVE THIS
 #include <stdio.h>
 #include <stdlib.h>
@@ -56,6 +55,7 @@ typedef	struct s_comp {
     double  imcenter;
 	double	cre;
 	double	cim;
+    double  itermax;
 }	t_comp;
 
 typedef struct s_meta {
@@ -75,7 +75,9 @@ int		algo_selection(t_meta	*meta, char	*param);
 t_data	img_init(void   *mlx, int	w, int h);
 t_meta	*meta_init(int	type);
 int		mandelbrot(int x, int y, t_meta	*meta, t_cn z_t, t_cn z_t1);
+int     julia(int x, int y, t_meta *meta, t_cn z_t, t_cn z_t1);
 int		set_complex_plane(t_meta	*meta, double   max, double min);
 t_cn	init_complex();
+void    zoom(t_meta *meta, int x, int y, int sign);
 
 #endif

@@ -56,6 +56,7 @@ t_meta	*meta_init(int	type)
 	meta->comp->imcenter = 0.0;
 	meta->comp->cre = 0.0;
 	meta->comp->cim = 0.0;
+    meta->comp->itermax = ITERATION_MAX;
 	meta->type = type;
     meta->img = img_init(meta->mlx, (int) WW, (int) WH);
 	mlx_key_hook(meta->win, key_hook, (void *) meta);
