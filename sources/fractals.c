@@ -27,7 +27,7 @@ int	set_complex_plane(t_meta *meta, double max, double min)
 	return (1);
 }
 
-t_cn	init_complex()
+t_cn	*init_complex()
 {
 	t_cn	*complex;
 
@@ -36,32 +36,33 @@ t_cn	init_complex()
 		exit(EXIT_FAILURE);
 	complex->r = 0.0;
 	complex->i = 0.0;
-	return (*complex);
+	return (complex);
 }
 
-t_cn    prep_vars(int x, int y, t_meta *meta)
+t_cn    *prep_vars(int x, int y, t_meta *meta)
 {
-    t_cn    zt;
-    t_cn    tmp;
+    t_cn    *zt;
+    t_cn    *tmp;
     t_comp   *cp;
 
     cp = meta->comp;
     zt = init_complex();
     tmp = init_complex();
-    tmp.r = x / cp->zoom_w + cp->remin;
-    tmp.i = y / cp->zoom_h + cp->imin;
+    tmp->r = x / cp->zoom_w + cp->remin;
+    tmp->i = y / cp->zoom_h + cp->imin;
     if (meta->type == 0)//MANDELBROT
     {
-        cp->cre = tmp.r;
-        cp->cim = tmp.i;
+        cp->cre = tmp->r;
+        cp->cim = tmp->i;
     }
     else if (meta->type == 1)
     {
-        zt.r = tmp.r;
-        zt.i = tmp.i;
-        cp->cre = -0.8;
-        cp->cim = 0.156;
+        zt->r = tmp->r;
+        zt->i = tmp->i;
     }
+    free(tmp);
+    tmp = NULL;
+    cp = NULL;
     return (zt);
 }
 
@@ -69,8 +70,8 @@ int	plot(t_meta	*meta)
 {
 	double	x;
 	double	y;
-	t_cn    zt1;
-    t_cn    zt;
+	t_cn    *zt1;
+    t_cn    *zt;
     t_comp  *cp;
 	//t_cn	tmp;
 
@@ -91,9 +92,11 @@ int	plot(t_meta	*meta)
 		while (++y < WH)
 		{
             zt = prep_vars(x, y, meta);
-            calculate(x, y, meta, zt, zt1);
+            calculate(x, y, meta, *zt, *zt1);
 		}
 	}
+    free(zt);
+    free(zt1);
 	mlx_put_image_to_window(meta->mlx, meta->win, meta->img.img, 0, 0);
 	return (1);	
 }

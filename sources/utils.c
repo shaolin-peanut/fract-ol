@@ -54,12 +54,14 @@ t_meta	*meta_init(int	type)
 	meta->comp->imax = 0.0;
     meta->comp->imrange = 0.0;
 	meta->comp->imcenter = 0.0;
-	meta->comp->cre = 0.0;
-	meta->comp->cim = 0.0;
+    meta->comp->cre = -0.8;
+    meta->comp->cim = 0.156;
+    meta->julia_static = -1;
     meta->comp->itermax = ITERATION_MAX;
 	meta->type = type;
     meta->img = img_init(meta->mlx, (int) WW, (int) WH);
 	mlx_key_hook(meta->win, key_hook, (void *) meta);
+    mlx_hook(meta->win, 6, 1L << 6, julia_pos, meta);
 	mlx_mouse_hook(meta->win, mouse_hook, (void *) meta);
 	return (meta);
 }

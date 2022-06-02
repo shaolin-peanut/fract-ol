@@ -20,7 +20,25 @@ int	key_hook(int keycode, t_meta *meta)
 		mlx_destroy_window(meta->mlx, meta->win);
         exit(0);
 	}
-	return (0);
+    else if (keycode == 32)
+    {
+        meta->julia_static *= -1;
+    }
+    return (1);
+}
+
+int julia_pos(int x, int y, t_meta *meta)
+{
+    t_comp  *cp;
+
+    cp = meta->comp;
+    if (x > 0 && x < WW && y > 0 && y < WH && meta->julia_static == -1)
+    {
+        meta->comp->cre = x / cp->zoom_w +  cp->remin;
+        meta->comp->cim = y / cp->zoom_h + cp->imin;
+        plot(meta);
+    }
+    return (1);
 }
 
 int	mouse_hook(int	code, int	x, int	y, t_meta *meta)
