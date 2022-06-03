@@ -13,8 +13,8 @@
 #ifndef FRACTOL_H
 # define FRACTOL_H
 
-#define WW 500.0
-#define WH 500.0
+#define WW 600.0
+#define WH 600.0
 # define RED 12
 # define GREEN 8
 # define BLUE 6
@@ -79,7 +79,7 @@ t_meta	*meta_init(int	type);
 int		mandelbrot(int x, int y, t_meta	*meta, t_cn z_t, t_cn z_t1);
 int     julia(int x, int y, t_meta *meta, t_cn z_t, t_cn z_t1);
 int		set_complex_plane(t_meta	*meta, double   max, double min);
-t_cn	*init_complex();
+t_cn	init_complex(t_cn complex);
 void    zoom(t_meta *meta, int x, int y, int sign);
 
 #endif

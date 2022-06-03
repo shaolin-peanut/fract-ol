@@ -12,6 +12,19 @@
 
 #include "fractol.h"
 
+int	set_complex_plane(t_meta *meta, double max, double min)
+{
+	meta->comp->remin = min;
+	meta->comp->remax = min;
+	meta->comp->rerange = max - min;
+	meta->comp->recenter = (meta->comp->remin + meta->comp->remax) / 2.0;
+	meta->comp->imin = min;
+	meta->comp->imax = max;
+	meta->comp->imrange = max - min;
+	meta->comp->imcenter = (meta->comp->imin + meta->comp->imax) / 2.0;
+	return (1);
+}
+
 t_meta	*malloc_sts() {
 	t_meta	*tmp;
 
@@ -84,29 +97,3 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	}
 	return (0);
 }
-
-/*void	colors_selection()
-{
-	if (n < MAX_ITERATIONS && n > 0) {
-		int i = n % 16;
-		QColor mapping[16];
-		mapping[0].setRgb(66, 30, 15);
-		mapping[1].setRgb(25, 7, 26);
-		mapping[2].setRgb(9, 1, 47);
-		mapping[3].setRgb(4, 4, 73);
-		mapping[4].setRgb(0, 7, 100);
-		mapping[5].setRgb(12, 44, 138);
-		mapping[6].setRgb(24, 82, 177);
-		mapping[7].setRgb(57, 125, 209);
-		mapping[8].setRgb(134, 181, 229);
-		mapping[9].setRgb(211, 236, 248);
-		mapping[10].setRgb(241, 233, 191);
-		mapping[11].setRgb(248, 201, 95);
-		mapping[12].setRgb(255, 170, 0);
-		mapping[13].setRgb(204, 128, 0);
-		mapping[14].setRgb(153, 87, 0);
-		mapping[15].setRgb(106, 52, 3);
-		return mapping[i];
-	}
-	else return Qt::black;
-}*/
