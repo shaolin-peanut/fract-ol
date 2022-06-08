@@ -13,26 +13,26 @@
 #ifndef FRACTOL_H
 # define FRACTOL_H
 
-#define WW 600.0
-#define WH 600.0
+# define WW 600.0
+# define WH 600.0
 # define RED 12
 # define GREEN 8
 # define BLUE 6
-#define ITERATION_MAX 50
+# define ITERATION_MAX 50
 // TEMPORARY          <------ REMOVE THIS | REMOVE THIS | REMOVE THIS
-#include <stdio.h>
-#include <stdlib.h>
+# include <stdio.h>
+# include <stdlib.h>
 // ALLOWED
-#include "../mlx-linux/mlx.h"
-#include "../libs/libft/libft.h"
-#include <unistd.h>
-#include <math.h>
+# include "../mlx-linux/mlx.h"
+# include "../libs/libft/libft.h"
+# include <unistd.h>
+# include <math.h>
 
-typedef struct		s_cn
+typedef struct	s_cn
 {
-	double			r;
-	double			i;
-}					t_cn;
+	double	r;
+	double	i;
+}	t_cn;
 
 typedef struct	s_data {
 	void	*img;

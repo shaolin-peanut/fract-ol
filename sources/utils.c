@@ -32,7 +32,6 @@ t_meta	*malloc_sts() {
 		return NULL;
 	if ((tmp->comp = (t_comp *)malloc(sizeof(t_comp))) == NULL)
 		return NULL;
-	//tmp->colors = (t_colors *)malloc(sizeof(t_colors));
 	return (tmp);
 }
 
@@ -41,59 +40,45 @@ t_data	img_init(void *mlx, int	w, int h)
     t_data  img;
 	//printf("w:%d, h:%d", w, h);
 	img.img = mlx_new_image(mlx, w, h);
-	if ((img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian)) == NULL)
+	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
+	if (img.addr == NULL)
 		exit(EXIT_FAILURE);
-    else
-        return (img);
+	else
+		return (img);
 }
 
-t_meta	*meta_init(int	type)
+t_comp	*comp_init(t_comp	*cp)
+{
+	cp->zoom_w = 0.0;
+	cp->zoom_h = 0.0;
+	cp->remin = 0.0;
+	cp->remax = 0.0;
+	cp->rerange = 0.0;
+	cp->recenter = 0.0;
+	cp->imin = 0.0;
+	cp->imax = 0.0;
+	cp->imrange = 0.0;
+	cp->imcenter = 0.0;
+	cp->cre = -0.8;
+	cp->cim = 0.156;
+	cp->itermax = ITERATION_MAX;
+}
+
+t_meta	*meta_init(int type)
 {
 	t_meta	*meta;
 
-	meta	= malloc_sts();	
+	meta = malloc_sts();
 	if (!meta || !meta->comp)
 		return (NULL);
 	meta->mlx = mlx_init();
 	meta->win = mlx_new_window(meta->mlx, WW, WH, "Fract-ol");
 	meta->image = NULL;
-	meta->comp->zoom_w = 0.0;
-	meta->comp->zoom_h = 0.0;
-	meta->comp->remin = 0.0;
-	meta->comp->remax = 0.0;
-    meta->comp->rerange = 0.0;
-    meta->comp->recenter = 0.0;
-	meta->comp->imin = 0.0;
-	meta->comp->imax = 0.0;
-    meta->comp->imrange = 0.0;
-	meta->comp->imcenter = 0.0;
-    meta->comp->cre = -0.8;
-    meta->comp->cim = 0.156;
-    meta->julia_static = -1;
-    meta->comp->itermax = ITERATION_MAX;
 	meta->type = type;
-    meta->img = img_init(meta->mlx, (int) WW, (int) WH);
+	meta->img = img_init(meta->mlx, (int) WW, (int) WH);
+	meta->julia_static = -1;
 	mlx_key_hook(meta->win, key_hook, (void *) meta);
-    mlx_hook(meta->win, 6, 1L << 6, julia_pos, meta);
+	mlx_hook(meta->win, 6, 1L << 6, julia_pos, meta);
 	mlx_mouse_hook(meta->win, mouse_hook, (void *) meta);
 	return (meta);
-}
-
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
-{
-	unsigned char	*string1;
-	unsigned char	*string2;
-	int				i;
-
-	i = -1;
-	string1 = (unsigned char *) s1;
-	string2 = (unsigned char *) s2;
-	while (++i < (int) n && (string1[i] || string2[i]))
-	{
-		if (string1[i] > string2[i])
-			return (1);
-		else if (string1[i] < string2[i])
-			return (-1);
-	}
-	return (0);
 }
