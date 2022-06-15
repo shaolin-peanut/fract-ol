@@ -32,7 +32,7 @@ t_cn	prep_vars(int x, int y, t_meta *meta)
 	tmp = init_complex(tmp);
 	tmp.r = x / cp->zoom_w + cp->remin;
 	tmp.i = y / cp->zoom_h + cp->imin;
-	if (meta->type == 0)
+	if (meta->type == 0 || meta->type == 2)
 	{
 		cp->cre = tmp.r;
 		cp->cim = tmp.i;

@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sbars <marvin@42lausanne.ch>               +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/10 17:23:11 by sbars             #+#    #+#             */
+/*   Updated: 2022/06/01 12:30:60 by sbars            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "fractol.h"
 
 void	zoom_compute(t_meta *meta, int sign);
@@ -16,7 +27,6 @@ void	zoom(t_meta *meta, int x, int y, int sign)
 	zoom_compute(meta, sign);
 	new_zoom_w = cp->rerange;
 	new_zoom_h = cp->imrange;
-	// top x axis limit = x / width -0.5 (to center) * (range_b4_compute - range_after_compute) * 2
 	cp->remax -= (x / WW - 0.5) * (new_zoom_w - backup_w) * 2;
 	cp->remin -= (x / WW - 0.5) * (new_zoom_w - backup_w) * 2;
 	cp->imax -= (y / WH - 0.5) * (new_zoom_h - backup_h) * 2;

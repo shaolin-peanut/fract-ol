@@ -13,14 +13,13 @@
 #ifndef FRACTOL_H
 # define FRACTOL_H
 
-# define WW 600.0
-# define WH 600.0
+# define WW 500.0
+# define WH 500.0
 # define RED 12
 # define GREEN 8
 # define BLUE 6
-# define ITERATION_MAX 50
+# define ITERATION_MAX 70
 // TEMPORARY          <------ REMOVE THIS | REMOVE THIS | REMOVE THIS
-# include <stdio.h>
 # include <stdlib.h>
 // ALLOWED
 # include "../mlx-linux/mlx.h"
@@ -28,13 +27,13 @@
 # include <unistd.h>
 # include <math.h>
 
-typedef struct	s_cn
+typedef struct s_cn
 {
 	double	r;
 	double	i;
 }	t_cn;
 
-typedef struct	s_data {
+typedef struct s_data {
 	void	*img;
 	char	*addr;
 	int		bits_per_pixel;
@@ -42,44 +41,42 @@ typedef struct	s_data {
 	int		endian;
 }	t_data;
 
-typedef	struct s_comp {
+typedef struct s_comp {
 	double	zoom_w;
-    double  zoom_h;
+	double	zoom_h;
 	double	remin;
 	double	remax;
-    double  rerange;
-    double  recenter;
+	double	rerange;
+	double	recenter;
 	double	imin;
 	double	imax;
-    double  imrange;
-    double  imcenter;
+	double	imrange;
+	double	imcenter;
 	double	cre;
 	double	cim;
-    double  itermax;
+	double	itermax;
 }	t_comp;
 
 typedef struct s_meta {
-	void *mlx;
-	void *win;
-	struct s_data *image;
-	struct s_comp *comp;
-    t_data img;
-	int	type;
-    int julia_static;
+	void			*mlx;
+	void			*win;
+	struct s_data	*image;
+	struct s_comp	*comp;
+	t_data			img;
+	int				type;
+	int				julia_static;
 }	t_meta;
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 int		key_hook(int keycode, t_meta *meta);
 int		mouse_hook(int code, int x, int y, t_meta	*meta);
-int     julia_pos(int x, int y, t_meta *meta);
+int		julia_pos(int x, int y, t_meta *meta);
 int		plot(t_meta	*meta);
 int		algo_selection(t_meta	*meta, char	*param);
-t_data	img_init(void   *mlx, int	w, int h);
-t_meta	*meta_init(int	type);
-int		mandelbrot(int x, int y, t_meta	*meta, t_cn z_t, t_cn z_t1);
-int     julia(int x, int y, t_meta *meta, t_cn z_t, t_cn z_t1);
-int		set_complex_plane(t_meta	*meta, double   max, double min);
+t_data	img_init(void *mlx, int w, int h);
+t_meta	*meta_init(int type);
+int		set_complex_plane(t_meta	*meta, double max, double min);
 t_cn	init_complex(t_cn complex);
-void    zoom(t_meta *meta, int x, int y, int sign);
+void	zoom(t_meta *meta, int x, int y, int sign);
 
 #endif

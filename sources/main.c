@@ -17,22 +17,14 @@ static	t_meta	*parse_args(int argc, char	**argv, t_meta	*meta)
 	if (argc != 2)
 	{
 		write(1, "Options:\n- mandelbrot\n- julia\n", 31);
-		return (0);
+		exit (EXIT_FAILURE);
 	}
 	if (!ft_strncmp(argv[1], "mandelbrot", 11))
-	{
 		meta = meta_init(0);
-		//mandelbrot_set(fract);
-		//start_hooks(fract);
-	}
 	else if (!ft_strncmp(argv[1], "julia", 6))
-	{
 		meta = meta_init(1);
-		//julia_set(fract);
-		//start_hooks(fract);
-	}
 	else
-		exit(EXIT_FAILURE);
+		exit(EXIT_SUCCESS);
 	return (meta);
 }
 
