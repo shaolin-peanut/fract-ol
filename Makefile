@@ -2,7 +2,8 @@
 
 NAME=fract-ol
 CC=gcc
-CFLAGS=-Wall -Wextra -Werror -fsanitize=address
+CFLAGS=-Wall -Wextra -Werror 
+##-fsanitize=address
 
 #Sources
 DIR_SRC=./sources
@@ -44,7 +45,7 @@ all : ${NAME}
 
 $(NAME):			 $(OBJS)
 		#make -C ${DIR_LIB_MLX}
-		$(CC) -fsanitize=address $(OBJS) -L${DIR_LIB_MLX} ${OFLAGS} -o $(NAME)
+		$(CC) $(OBJS) -L${DIR_LIB_MLX} ${OFLAGS} -o $(NAME)
 
 ${DIR_OBJ}/%.o : %.c | ${DIR_OBJ}
 		$(CC) ${CFLAGS} -I${DIR_LIB_MLX} -O3 -c $< -o $@
