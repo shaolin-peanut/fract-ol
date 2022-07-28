@@ -10,4 +10,4 @@ Learned a lot coding this project.
 When running the julia set, the fractal will update as you move the mouse. If you it to stop moving (to zoom more easily for example), press the `SPACE` bar
 
 If you're too lazy to install the program, here's a little demo:
-<iframe width="560" height="315" src="https://www.youtube.com/embed/BVqaJY4r1ks" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+https://www.youtube.com/watch?v=BVqaJY4r1ks (can't embed)
