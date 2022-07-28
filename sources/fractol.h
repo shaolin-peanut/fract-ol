@@ -19,11 +19,10 @@
 # define GREEN 8
 # define BLUE 6
 # define ITERATION_MAX 70
-// TEMPORARY          <------ REMOVE THIS | REMOVE THIS | REMOVE THIS
-# include <stdlib.h>
 // ALLOWED
 # include "../mlx-linux/mlx.h"
 # include "../libs/libft/libft.h"
+# include <stdlib.h>
 # include <unistd.h>
 # include <math.h>
 

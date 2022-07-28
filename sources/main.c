@@ -20,11 +20,18 @@ static	t_meta	*parse_args(int argc, char	**argv, t_meta	*meta)
 		exit (EXIT_FAILURE);
 	}
 	if (!ft_strncmp(argv[1], "mandelbrot", 11))
+	{
 		meta = meta_init(0);
+	}
 	else if (!ft_strncmp(argv[1], "julia", 6))
+	{
 		meta = meta_init(1);
+	}
 	else
+	{
+		write(1, "Options:\n- mandelbrot\n- julia\n", 31);
 		exit(EXIT_SUCCESS);
+	}
 	return (meta);
 }
 
