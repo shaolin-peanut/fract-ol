@@ -6,7 +6,7 @@
 /*   By: sbars <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 12:06:44 by sbars             #+#    #+#             */
-/*   Updated: 2022/05/10 12:51:45 by sbars            ###   ########.fr       */
+/*   Updated: 2022/07/29 11:48:22 by sbars            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,10 @@
 
 int	calculate(int x, int y, t_meta	*meta, t_cn vroom[2]);
 
-t_cn	init_complex(t_cn complex)
+void	init_complex(t_cn *complex)
 {
-	complex.r = 0.0;
-	complex.i = 0.0;
-	return (complex);
+	complex->r = 0.0;
+	complex->i = 0.0;
 }
 
 t_cn	prep_vars(int x, int y, t_meta *meta)
@@ -28,8 +27,8 @@ t_cn	prep_vars(int x, int y, t_meta *meta)
 	t_comp	*cp;
 
 	cp = meta->comp;
-	zt = init_complex(zt);
-	tmp = init_complex(tmp);
+	init_complex(&zt);
+	init_complex(&tmp);
 	tmp.r = x / cp->zoom_w + cp->remin;
 	tmp.i = y / cp->zoom_h + cp->imin;
 	if (meta->type == 0 || meta->type == 2)
@@ -55,7 +54,7 @@ int	plot(t_meta	*meta)
 
 	x = -1.0;
 	y = -1.0;
-	coordinates[1] = init_complex(coordinates[1]);
+	init_complex(&coordinates[1]);
 	cp = meta->comp;
 	cp->zoom_w = WW / cp->rerange;
 	cp->zoom_h = WH / cp->imrange;

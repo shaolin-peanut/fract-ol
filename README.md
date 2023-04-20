@@ -13,3 +13,6 @@ When running the julia set, the fractal will update as you move the mouse. If yo
 
 If you're too lazy to install the program, here's a little demo:
 https://www.youtube.com/watch?v=BVqaJY4r1ks (can't embed)
+
+If it's too slow, decrease window height or width (WW and WH in sources/fractol.h)
+If julia is doing very fine, you can increase window size and iterations until it slows down, it's worth looking at

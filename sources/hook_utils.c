@@ -6,7 +6,7 @@
 /*   By: sbars <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 11:45:57 by sbars             #+#    #+#             */
-/*   Updated: 2022/05/10 11:47:48 by sbars            ###   ########.fr       */
+/*   Updated: 2022/07/29 11:45:23 by sbars            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	key_hook(int keycode, t_meta *meta)
 		mlx_destroy_window(meta->mlx, meta->win);
 		exit(0);
 	}
-	else if (keycode == 32)
+	else if (keycode == 32 || keycode == 49)
 	{
 		meta->julia_static *= -1;
 	}

@@ -6,19 +6,19 @@
 /*   By: sbars <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 15:57:29 by sbars             #+#    #+#             */
-/*   Updated: 2022/05/10 12:49:51 by sbars            ###   ########.fr       */
+/*   Updated: 2022/07/29 11:42:35 by sbars            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FRACTOL_H
 # define FRACTOL_H
 
-# define WW 500.0
-# define WH 500.0
+# define WW 700.0
+# define WH 700.0
 # define RED 12
 # define GREEN 8
 # define BLUE 6
-# define ITERATION_MAX 70
+# define ITERATION_MAX 90
 // ALLOWED
 # include "../mlx-linux/mlx.h"
 # include "../libs/libft/libft.h"
@@ -75,7 +75,7 @@ int		algo_selection(t_meta	*meta, char	*param);
 t_data	img_init(void *mlx, int w, int h);
 t_meta	*meta_init(int type);
 int		set_complex_plane(t_meta	*meta, double max, double min);
-t_cn	init_complex(t_cn complex);
+void	init_complex(t_cn *complex);
 void	zoom(t_meta *meta, int x, int y, int sign);
 
 #endif

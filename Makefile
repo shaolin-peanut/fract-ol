@@ -34,7 +34,7 @@ endif
 #$(CC) $(OBJS) -L${DIR_LIB_M	LX}/ -Imlx-apple -lmlx -o $(NAME)
 
 ifeq ($(UNAME_S),Darwin)
-		DIR_LIB_MLX=libs/mlx-apple
+		DIR_LIB_MLX=libs/mlx-mac
 		OFLAGS=-L${DIR_LIB_MLX} -lmlx -framework OpenGL -framework AppKit
 endif
 
