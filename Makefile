@@ -35,7 +35,9 @@ endif
 
 ifeq ($(UNAME_S),Darwin)
 		DIR_LIB_MLX=libs/mlx-mac
-		OFLAGS=-L${DIR_LIB_MLX} -lmlx -framework OpenGL -framework AppKit
+#		DIR_LIB_MLX=MLX42/build/libmlx42.a
+		#OFLAGS=-L${DIR_LIB_SYS} -framework OpenGL -framework IOKit
+		OFLAGS=${DIR_LIB_MLX}/libmlx.a -framework OpenGL -framework AppKit -Iinclude -lglfw -L"/opt/homebrew/Cellar/glfw/3.4/lib"
 endif
 
 vpath %.c ${DIR_SRC}
