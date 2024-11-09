@@ -1,5 +1,6 @@
 # Fract-ol
 Fract-ol is a fractals explorer, for the mandelbrot and julia set. It is coded in C, and is part of school 42's cursus.  
+![image](https://github.com/user-attachments/assets/777a8182-37d6-414a-ab4b-8d0bb352d2ff)
 We had to use a minimalist graphic library coded by people from the school, Minilibx. Here's a student made documentation.  
 I learned a lot about complex numbers, and how to plot the result of equations pixel by pixel. Fascinating introduction to graphic design, which I hope to do more of. I don't want to code video games, but visualizing math, biology, and nature are things I'm very interested in.
 ## Usage
